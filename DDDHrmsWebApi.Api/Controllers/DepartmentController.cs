@@ -12,9 +12,11 @@ namespace DDDHrmsWebApi.Api.Controllers
     public class DepartmentController : ControllerBase
     {   
         IDepartments service;
-        public DepartmentController(IDepartments departments)
+        private readonly ILogger<DepartmentController> _logger;
+        public DepartmentController(IDepartments departments, ILogger<DepartmentController> logger)
         {
             service = departments;
+            _logger = logger;
         }
 
         [HttpPost]
@@ -29,8 +31,20 @@ namespace DDDHrmsWebApi.Api.Controllers
         [Route("FetchDepartment")]
         public IActionResult FetchDepartment()
         {
-            var res = service.FetchDepartment();
-            return Ok(res);
+            _logger.LogInformation("Get Departments API called");
+            try
+            {
+                var res = service.FetchDepartment();
+                _logger.LogInformation("Departments fetched successfully");
+                return Ok(res);
+            }
+            catch (Exception ex) {
+
+                _logger.LogError(ex, "Error in Get Departments");
+                return StatusCode(500, "Internal Server Error");
+
+            }
+          
         }
 
         [HttpGet]
