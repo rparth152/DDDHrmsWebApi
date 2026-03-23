@@ -1,5 +1,9 @@
+using DDDHrmsWebApi.Application.Interface;
 using DDDHrmsWebApi.Infrastructure.Data;
+using DDDHrmsWebApi.Infrastructure.Services;
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using DDDHrmsWebApi.Application.Mapping;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,7 +15,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("dbconn")));
-
+builder.Services.AddAutoMapper(typeof(Mapping));
+builder.Services.AddScoped<IEstatus, Estatus>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

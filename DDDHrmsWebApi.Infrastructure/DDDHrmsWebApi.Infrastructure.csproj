@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.0">
       <PrivateAssets>all</PrivateAssets>
@@ -17,10 +18,6 @@
   <ItemGroup>
     <ProjectReference Include="..\DDDHrmsWebApi.Application\DDDHrmsWebApi.Application.csproj" />
     <ProjectReference Include="..\DDDHrmsWebApi.Domain\DDDHrmsWebApi.Domain.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Services\" />
   </ItemGroup>
 
 </Project>
