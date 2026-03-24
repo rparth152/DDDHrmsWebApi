@@ -19,6 +19,13 @@ namespace DDDHrmsWebApi.Application.Mapping
             CreateMap<LeaveRequest, FetchLeaves>();
             // CreateMap<Source, Destination>();
             // Example: CreateMap<Employee, EmployeeDto>();
+            CreateMap<Employee, UserExportDTO>()
+            .ForMember(dest => dest.FirstName,
+                opt => opt.MapFrom(src => src.FirstName + " " + src.LastName))
+            .ForMember(dest => dest.Department,
+                opt => opt.MapFrom(src => src.AddDepartments.DepartmentName))
+            .ForMember(dest => dest.JoiningDate,
+                opt => opt.MapFrom(src => src.JoiningDate.ToString("yyyy-MM-dd")));
         }
     }
 }

@@ -16,6 +16,8 @@ namespace DDDHrmsWebApi.Application.Interface
         //public int ActiveEmployees();
         //public int EmployeeCount();
         //public int InactiveEmployees();
+        byte[] ExportEmployeesToCSV();
+        byte[] ExportEmployeesToPDF();
         public EstatusDTO Fetchdata();
     }
 }

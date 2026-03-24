@@ -2,12 +2,17 @@
 using DDDHrmsWebApi.Application.DTO;
 using DDDHrmsWebApi.Application.Interface;
 using DDDHrmsWebApi.Infrastructure.Data;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Design;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
+using Document = iTextSharp.text.Document;
 
 namespace DDDHrmsWebApi.Infrastructure.Services
 {
@@ -27,22 +32,7 @@ namespace DDDHrmsWebApi.Infrastructure.Services
         }
         List<FetchAttendance> IEstatus.FAttendance()
         {
-            var data = db.Attendances.Select(e => new FetchAttendance {
-                AttendanceId = e.AttendanceId,
-                EmployeeId = e.EmployeeId,
-                Date = e.Date,
-                CheckIn = e.CheckIn,
-                CheckOut = e.CheckOut,
-                LunchIn = e.LunchIn,
-                LunchOut = e.LunchOut,
-                WorkingHours = e.WorkingHours,
-                ProductionHours = e.ProductionHours,
-                OvertimeHours = e.OvertimeHours,
-                BreakHours = e.BreakHours,
-                Late = e.Late,
-                Status = e.Status,
-               
-            }).ToList();
+            var data =  mapper.Map<List<FetchAttendance>>(db.Attendances.ToList());
             return data;
         }
 
@@ -69,26 +59,77 @@ namespace DDDHrmsWebApi.Infrastructure.Services
 
         public List<FetchLeaves> Leaves()
         {
-            var data = db.LeaveRequest.Select(e => new FetchLeaves
-            {
-            LeaveRequestId = e.LeaveRequestId,
-            EmployeeId = e.EmployeeId,
-            
-            LeaveTypeId = e.LeaveTypeId,
-            StartDate = e.StartDate,
-            EndDate = e.EndDate,
-            NumberOfDays = e.NumberOfDays,
-            Reason = e.Reason,
-            ApprovedBy = e.ApprovedBy,
-            Status = e.Status,
-            StatusHistory = e.StatusHistory,
-
-            }
-            ).ToList();
+            var data = mapper.Map<List<FetchLeaves>>(db.LeaveRequest.ToList());
             return data;
         }
 
+        public byte[] ExportEmployeesToCSV()
+        {
+            var employees = mapper
+                .ProjectTo<UserExportDTO>(db.Employee)
+                .ToList();
 
+            var builder = new StringBuilder();
+            builder.AppendLine("EmployeeId,Name,Email,Department,Contact Number,Joining Date,Status");
+
+            foreach (var emp in employees)
+            {
+                builder.AppendLine($"{emp.EmployeeId},{emp.FirstName},{emp.Email},{emp.Department},{emp.ContactNumber},{emp.JoiningDate},{emp.Status}");
+            }
+
+            return Encoding.UTF8.GetBytes(builder.ToString());
+        }
+
+        public byte[] ExportEmployeesToPDF()
+        {
+            var employees = mapper
+                .ProjectTo<UserExportDTO>(db.Employee)
+                .ToList();
+
+            using (var stream = new MemoryStream())
+            {
+                var document = new Document();
+                PdfWriter.GetInstance(document, stream).CloseStream = false;
+                document.Open();
+
+                // Title
+                var title = new Paragraph("Employee Report",
+                    FontFactory.GetFont(FontFactory.HELVETICA_BOLD, 16))
+                {
+                    Alignment = Element.ALIGN_CENTER
+                };
+
+                document.Add(title);
+                document.Add(new Paragraph(" "));
+
+                // Table
+                var table = new PdfPTable(7) { WidthPercentage = 100 };
+
+                table.AddCell("EmployeeId");
+                table.AddCell("Name");
+                table.AddCell("Email");
+                table.AddCell("Department");
+                table.AddCell("Contact Number");
+                table.AddCell("Joining Date");
+                table.AddCell("Status");
+
+                foreach (var emp in employees)
+                {
+                    table.AddCell(emp.EmployeeId.ToString());
+                    table.AddCell(emp.FirstName);
+                    table.AddCell(emp.Email);
+                    table.AddCell(emp.Department);
+                    table.AddCell(emp.ContactNumber);
+                    table.AddCell(emp.JoiningDate);
+                    table.AddCell(emp.Status);
+                }
+
+                document.Add(table);
+                document.Close();
+
+                return stream.ToArray();
+            }
+        }
 
         //public int InactiveEmployees()
         //{

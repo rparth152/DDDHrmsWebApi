@@ -40,6 +40,18 @@ namespace DDDHrmsWebApi.Api.Controllers
             var data = service.Leaves();
             return Ok(ApiResponse<List<FetchLeaves>>.SuccessResponse(data));
         }
+        [HttpGet("ExportCSV")]
+        [Produces("text/csv")]
+        public IActionResult ExportCsv() {
+            var data = service.ExportEmployeesToCSV();
+            return File(data, "text/csv", "EmployeeReport.csv");
+        }
+        [HttpGet("ExportPDF")]
+        public IActionResult ExportPdf()
+        {
+            var data = service.ExportEmployeesToPDF();
+            return File(data, "application/pdf", "EmployeeReport.pdf");
+        }
         //[HttpGet("Empcount")]
         //public IActionResult EmployeeCount() {
         //    var data = service.EmployeeCount();
