@@ -1,9 +1,14 @@
-﻿using System.Net;
+﻿
+using System.Net;
 using System.Text.Json;
-
+using DDDHrmsWebApi.Application.DTO;
 
 namespace DDDHrmsWebApi.Api.Middleware
 {
+
+
+
+
    
 
     public class GlobalExceptionMiddleware
@@ -11,7 +16,8 @@ namespace DDDHrmsWebApi.Api.Middleware
         private readonly RequestDelegate _next;
         private readonly ILogger<GlobalExceptionMiddleware> _logger;
 
-        public GlobalExceptionMiddleware(RequestDelegate next, ILogger<GlobalExceptionMiddleware> logger)
+        public GlobalExceptionMiddleware(RequestDelegate next,
+            ILogger<GlobalExceptionMiddleware> logger)
         {
             _next = next;
             _logger = logger;
@@ -25,17 +31,14 @@ namespace DDDHrmsWebApi.Api.Middleware
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Unhandled Exception Occurred");
+                //  Log error
+                _logger.LogError(ex, "Global Exception Occurred");
 
                 context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
                 context.Response.ContentType = "application/json";
 
-                var response = new
-                {
-                    StatusCode = context.Response.StatusCode,
-                    Message = "Something went wrong",
-                    Detailed = ex.Message
-                };
+                //  ApiResponse format
+                var response = ApiResponse<string>.ErrorResponse(ex.Message);
 
                 await context.Response.WriteAsync(JsonSerializer.Serialize(response));
             }

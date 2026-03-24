@@ -10,7 +10,7 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// ✅ Configure Serilog FIRST
+
 Log.Logger = new LoggerConfiguration()
     .MinimumLevel.Information()
     .Enrich.FromLogContext()
@@ -57,12 +57,12 @@ builder.Services.AddAuthentication("JwtBearer")
         };
     });
 
-// ✅ Authorization (MUST be before Build)
+
 builder.Services.AddAuthorization();
 
 var app = builder.Build();
 
-// ✅ Middleware
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -71,9 +71,9 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseAuthentication(); // ✅ first
-app.UseAuthorization();  // ✅ then
-
+app.UseAuthentication(); 
+app.UseAuthorization();  
+app.UseMiddleware<RequestResponseLoggingMiddleware>();
 app.UseMiddleware<GlobalExceptionMiddleware>();
 app.MapControllers();
 

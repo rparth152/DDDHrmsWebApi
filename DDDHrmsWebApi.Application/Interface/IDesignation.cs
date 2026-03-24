@@ -11,7 +11,7 @@ namespace DDDHrmsWebApi.Application.Interface
     {
         void AddDesignation(DesignationDTO dto);
 
-        List<DesignationDeptDTO> FetchDesignation();
+        PagedResponse<DesignationDeptDTO> FetchDesignation(PagedRequest request);
 
         DesignationDTO FindDesignationById(int id);
         void UpdateDesignation(DesignationDTO dto);
