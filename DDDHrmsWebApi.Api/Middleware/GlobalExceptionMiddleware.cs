@@ -7,10 +7,6 @@ namespace DDDHrmsWebApi.Api.Middleware
 {
 
 
-
-
-   
-
     public class GlobalExceptionMiddleware
     {
         private readonly RequestDelegate _next;

@@ -43,22 +43,11 @@ namespace DDDHrmsWebApi.Infrastructure.Services
         {
             var query = db.AddDepartments.AsQueryable();
 
-            if (!string.IsNullOrEmpty(request.SearchText))
-            {
-                var search = request.SearchText.ToLower();
+          query = query.Where(x => (string.IsNullOrWhiteSpace(request.SearchText) ||
+         (x.DepartmentName != null && x.DepartmentName.ToLower().Contains(request.SearchText.Trim().ToLower())))
+            &&
+         (string.IsNullOrWhiteSpace(request.Status) || (x.Status != null && x.Status.ToLower() == request.Status.Trim().ToLower())));
 
-                query = query.Where(x =>
-                    x.DepartmentName != null &&
-                    x.DepartmentName.ToLower().Contains(search));
-            }
-
-        
-            if (!string.IsNullOrEmpty(request.Status))
-            {
-                query = query.Where(x => x.Status == request.Status);
-            }
-
-           
             if (!string.IsNullOrEmpty(request.SortBy))
             {
                 var sortOrder = request.SortOrder?.ToLower() == "desc" ? "descending" : "ascending";
@@ -127,6 +116,7 @@ namespace DDDHrmsWebApi.Infrastructure.Services
                 return false ; 
             }
 
+            data.Status = "Inactive";
             db.AddDepartments.Remove(data);
             db.SaveChanges();
 

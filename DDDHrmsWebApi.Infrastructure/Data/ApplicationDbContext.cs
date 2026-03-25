@@ -61,9 +61,9 @@ namespace DDDHrmsWebApi.Infrastructure.Data
             modelBuilder.Entity<Employee>(e =>
             {
                 e.HasOne(x => x.AddDepartments)
-                .WithMany()
-                .HasForeignKey(x => x.DepartmentId)
-                .OnDelete(DeleteBehavior.Restrict);
+            .WithMany()
+            .HasForeignKey(x => x.DepartmentId)
+            .OnDelete(DeleteBehavior.Restrict);
 
                 e.HasOne(x => x.AddDesignation)
                 .WithMany()

@@ -72,7 +72,7 @@ namespace DDDHrmsWebApi.Api.Controllers
             if (id <= 0)
             {
                 return BadRequest(ApiResponse<string>
-                    .ErrorResponse("Invalid ID"));
+                    .ErrorResponse("Invalid ID " + id ));
             }
 
             var result = service.DeleteDesignation(id);

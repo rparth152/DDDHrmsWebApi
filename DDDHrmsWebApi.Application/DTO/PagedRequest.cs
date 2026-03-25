@@ -14,8 +14,8 @@ namespace DDDHrmsWebApi.Application.DTO
         public string SortBy { get; set; } = "DesignationName";
         public string SortOrder { get; set; } = "asc"; // asc / desc
 
-        public string SearchText { get; set; }
+        public string? SearchText { get; set; }
 
-        public string Status { get; set; }
+        public string? Status { get; set; }
     }
 }

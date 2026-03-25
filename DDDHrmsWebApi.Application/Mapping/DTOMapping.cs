@@ -12,8 +12,8 @@ namespace DDDHrmsWebApi.Application.Mapping
     public class DTOMapping : Profile
     {
         public DTOMapping() {
-            CreateMap<AddDepartments, RoleDTO>().ReverseMap();
-           
+            CreateMap<Employee, RegisterDTO>().ReverseMap();
+            CreateMap<Employee, LoginDTO>().ReverseMap();
 
             CreateMap<AddRole, RoleDTO>().ReverseMap();
             CreateMap<AddRole, RoleUpdateDTO>().ReverseMap();

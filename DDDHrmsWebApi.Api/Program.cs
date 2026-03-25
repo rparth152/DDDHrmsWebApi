@@ -60,6 +60,19 @@ builder.Services.AddAuthentication("JwtBearer")
 
 builder.Services.AddAuthorization();
 
+
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowMVC",
+        policy =>
+        {
+            policy.WithOrigins("http://localhost:5288")
+                  .AllowAnyHeader()
+                  .AllowAnyMethod();
+        });
+});
+
 var app = builder.Build();
 
 
@@ -71,7 +84,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseAuthentication(); 
+app.UseAuthentication();
+app.UseCors("AllowMVC");
 app.UseAuthorization();  
 app.UseMiddleware<RequestResponseLoggingMiddleware>();
 app.UseMiddleware<GlobalExceptionMiddleware>();
