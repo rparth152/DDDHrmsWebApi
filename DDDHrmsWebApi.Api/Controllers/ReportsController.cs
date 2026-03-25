@@ -22,8 +22,6 @@ namespace DDDHrmsWebApi.Api.Controllers
         public IActionResult Estatus() {
             var data=service.Fetchdata();
             return Ok(ApiResponse<EstatusDTO>.SuccessResponse(data));
-
-
         }
         [HttpGet("fetchemp")]
         public IActionResult FetchEmployees() {

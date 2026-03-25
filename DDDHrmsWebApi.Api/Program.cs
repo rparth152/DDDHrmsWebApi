@@ -16,6 +16,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("dbconn")));
 builder.Services.AddAutoMapper(typeof(Mapping));
+builder.Services.AddMemoryCache();
 builder.Services.AddScoped<IEstatus, Estatus>();
 var app = builder.Build();
 

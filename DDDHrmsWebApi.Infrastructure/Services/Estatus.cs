@@ -12,22 +12,34 @@ using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using Microsoft.Extensions.Caching.Memory;
 using Document = iTextSharp.text.Document;
 
 namespace DDDHrmsWebApi.Infrastructure.Services
 {
     public class Estatus : IEstatus
     {
+        IMemoryCache cache;
         ApplicationDbContext db;
         IMapper mapper;
-        public Estatus(ApplicationDbContext db, IMapper mapper) {
+        public Estatus(ApplicationDbContext db, IMapper mapper, IMemoryCache cache) {
             this.db = db;
             this.mapper = mapper;
+            this.cache = cache;
         }
 
         public List<FetchEmpDTO> Employees()
         {
-            var data= mapper.Map<List<FetchEmpDTO>>(db.Employee.ToList());
+            if (!cache.TryGetValue("employees", out List<FetchEmpDTO> data))
+            {
+                data = mapper.Map<List<FetchEmpDTO>>(db.Employee.ToList());
+
+                var options = new MemoryCacheEntryOptions()
+                    .SetSlidingExpiration(TimeSpan.FromMinutes(5));
+
+                cache.Set("employees", data, options);
+            }
+
             return data;
         }
         List<FetchAttendance> IEstatus.FAttendance()
