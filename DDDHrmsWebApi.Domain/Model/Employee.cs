@@ -15,22 +15,22 @@ namespace DDDHrmsWebApi.Domain.Model
         public DateTime BirthDate { get; set; }
 
         [ForeignKey("AddDepartments")]
-        public int DepartmentId { get; set; }
+        public int? DepartmentId { get; set; }
         public AddDepartments AddDepartments { get; set; }
 
         [ForeignKey("AddRole")]
-        public int RoleId { get; set; }
+        public int? RoleId { get; set; }
         public AddRole AddRole { get; set; }
 
         [ForeignKey("AddDesignation")]
-        public int DesignationId { get; set; }
+        public int? DesignationId { get; set; }
         public AddDesignation AddDesignation { get; set; }
 
-        public string ContactNumber { get; set; }
-        public string Address { get; set; }
-        public string Gender { get; set; }
-        public string Status { get; set; }
-        public string About { get; set; }
+        public string? ContactNumber { get; set; }
+        public string? Address { get; set; }
+        public string?  Gender { get; set; }
+        public string? Status { get; set; }
+        public string? About { get; set; }
 
 
 
