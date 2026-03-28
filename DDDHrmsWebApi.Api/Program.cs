@@ -1,4 +1,8 @@
-﻿using DDDHrmsWebApi.Api.Middleware;
+
+using AutoMapper;
+
+
+using DDDHrmsWebApi.Api.Middleware;
 using DDDHrmsWebApi.Application.Interface;
 using DDDHrmsWebApi.Application.Mapping;
 using DDDHrmsWebApi.Infrastructure.Data;
@@ -7,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Serilog;
 using System.Text;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,6 +35,9 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
+options.UseSqlServer(builder.Configuration.GetConnectionString("dbconn")));
+builder.Services.AddAutoMapper(typeof(Mapping));
+builder.Services.AddScoped<IEstatus, Estatus>();
     options.UseSqlServer(builder.Configuration.GetConnectionString("dbconn")));
 
 builder.Services.AddScoped<IAuthService, AuthService>();
