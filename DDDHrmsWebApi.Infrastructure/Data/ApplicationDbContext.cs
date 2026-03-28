@@ -141,19 +141,34 @@ namespace DDDHrmsWebApi.Infrastructure.Data
 
             });
 
-            // TaskBoards -> Task (Restrict delete to avoid multiple cascading paths)
+            //Projects - Saurabh
+            modelBuilder.Entity<Projects>()
+            .HasOne(p => p.Manager)
+            .WithMany()
+            .HasForeignKey(p => p.ManagerId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Employee>()
+            .HasOne(e => e.Projects)
+            .WithMany(p => p.Employee)
+            .HasForeignKey(e => e.ProjectId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+            // TaskBoards -> Tasks (Many TaskBoards belong to one Task)
+            // One Task can have multiple TaskBoards (progress entries)
             modelBuilder.Entity<TaskBoards>()
-              .HasOne(t => t.Tasks)
-                .WithMany()
+                .HasOne(t => t.Tasks)
+                .WithMany(t => t.TaskBoards)
                 .HasForeignKey(t => t.TaskId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // TaskBoards -> Projects (Restrict delete to avoid multiple cascading paths)
+
+            // TaskBoards -> Projects (Many TaskBoards belong to one Project)
             modelBuilder.Entity<TaskBoards>()
                 .HasOne(t => t.Projects)
                 .WithMany()
                 .HasForeignKey(t => t.ProjectId)
-                .OnDelete(DeleteBehavior.Restrict); // Fix: Avoid cascading delete
+                .OnDelete(DeleteBehavior.Restrict);
 
             // Tasks -> Projects (Ensure foreign key constraint is properly configured)
             modelBuilder.Entity<Tasks>()
@@ -161,6 +176,23 @@ namespace DDDHrmsWebApi.Infrastructure.Data
            .WithMany(p => p.Tasks)
            .HasForeignKey(t => t.ProjectId)
            .OnDelete(DeleteBehavior.Restrict); // Fix: Avoid cascading delete
+
+
+            // TaskMembers -> Tasks (Many TaskMembers belong to one Task)
+            // One Task can have multiple assigned members
+            modelBuilder.Entity<TaskMembers>()
+            .HasOne(x => x.Task)
+            .WithMany(t => t.Taskmembers)
+            .HasForeignKey(x => x.TaskId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+            // TaskMembers -> Employee (Many TaskMembers reference one Employee)
+            // One Employee can be assigned to multiple tasks
+            modelBuilder.Entity<TaskMembers>()
+            .HasOne(x => x.Employee)
+            .WithMany()
+            .HasForeignKey(x => x.EmployeeId)
+            .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Deduction>()
            .HasOne(d => d.Designation)

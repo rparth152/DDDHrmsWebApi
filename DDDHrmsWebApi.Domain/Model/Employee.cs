@@ -32,8 +32,10 @@ namespace DDDHrmsWebApi.Domain.Model
         public string Status { get; set; }
         public string About { get; set; }
 
-
-
+        //Added For Projects - Saurabh
+        public int? ProjectId { get; set; }
+        [ForeignKey("ProjectId")]
+        public Projects Projects { get; set; } 
 
     }
 }

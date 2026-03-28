@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Threading.Tasks;
 
 namespace DDDHrmsWebApi.Domain.Model
@@ -50,8 +51,11 @@ namespace DDDHrmsWebApi.Domain.Model
         [StringLength(50, ErrorMessage = "Status cannot exceed 50 characters.")]
         public string Status { get; set; }
 
-        [Required(ErrorMessage = "Manager Name is required.")]
-        public string ManagerName { get; set; }
+        [Required(ErrorMessage = "Manager is required.")]
+        // Manager (Employee with Role = Manager)
+        [ForeignKey("Manager")]
+        public int ManagerId { get; set; }
+        public Employee Manager { get; set; }
 
         //one project can have many task -->  one to many relation
         public ICollection<Tasks> Tasks { get; set; }
@@ -60,7 +64,7 @@ namespace DDDHrmsWebApi.Domain.Model
         public virtual ICollection<Employee> Employee { get; set; } = new List<Employee>();
 
         //many to one
-        //public List<Timesheet> Timesheets { get; set; }
+        public List<Timesheet> Timesheets { get; set; }
 
     }
 }

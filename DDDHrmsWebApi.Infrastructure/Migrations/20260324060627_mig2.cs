@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace DDDHrmsWebApi.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class migrationname : Migration
+    public partial class mig2 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -153,30 +153,6 @@ namespace DDDHrmsWebApi.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Projects",
-                columns: table => new
-                {
-                    ProjectId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ProjectName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    ClientName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false),
-                    StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Priority = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    ProjectValue = table.Column<double>(type: "float", nullable: false),
-                    PriceType = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    FilePath = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    LogoPath = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    Status = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    ManagerName = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Projects", x => x.ProjectId);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "AddDesignation",
                 columns: table => new
                 {
@@ -275,31 +251,6 @@ namespace DDDHrmsWebApi.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Tasks",
-                columns: table => new
-                {
-                    TaskId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ProjectId = table.Column<int>(type: "int", nullable: false),
-                    Title = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false),
-                    Status = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Priority = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    FilePath = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
-                    Deadline = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Tasks", x => x.TaskId);
-                    table.ForeignKey(
-                        name: "FK_Tasks_Projects_ProjectId",
-                        column: x => x.ProjectId,
-                        principalTable: "Projects",
-                        principalColumn: "ProjectId",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Deduction",
                 columns: table => new
                 {
@@ -382,96 +333,6 @@ namespace DDDHrmsWebApi.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Employee",
-                columns: table => new
-                {
-                    EmployeeId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    JoiningDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    BirthDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DepartmentId = table.Column<int>(type: "int", nullable: false),
-                    RoleId = table.Column<int>(type: "int", nullable: false),
-                    DesignationId = table.Column<int>(type: "int", nullable: false),
-                    ContactNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Gender = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    About = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    AddRoleRoleId = table.Column<int>(type: "int", nullable: true),
-                    ProjectsProjectId = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Employee", x => x.EmployeeId);
-                    table.ForeignKey(
-                        name: "FK_Employee_AddDepartments_DepartmentId",
-                        column: x => x.DepartmentId,
-                        principalTable: "AddDepartments",
-                        principalColumn: "DepartmentId",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Employee_AddDesignation_DesignationId",
-                        column: x => x.DesignationId,
-                        principalTable: "AddDesignation",
-                        principalColumn: "DesignationId",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Employee_AddRole_AddRoleRoleId",
-                        column: x => x.AddRoleRoleId,
-                        principalTable: "AddRole",
-                        principalColumn: "RoleId");
-                    table.ForeignKey(
-                        name: "FK_Employee_AddRole_RoleId",
-                        column: x => x.RoleId,
-                        principalTable: "AddRole",
-                        principalColumn: "RoleId",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Employee_Projects_ProjectsProjectId",
-                        column: x => x.ProjectsProjectId,
-                        principalTable: "Projects",
-                        principalColumn: "ProjectId");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "TaskBoards",
-                columns: table => new
-                {
-                    TaskBoardId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ProjectId = table.Column<int>(type: "int", nullable: false),
-                    TaskId = table.Column<int>(type: "int", nullable: false),
-                    Percentage = table.Column<int>(type: "int", nullable: false),
-                    DueDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    TasksTaskId = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_TaskBoards", x => x.TaskBoardId);
-                    table.ForeignKey(
-                        name: "FK_TaskBoards_Projects_ProjectId",
-                        column: x => x.ProjectId,
-                        principalTable: "Projects",
-                        principalColumn: "ProjectId",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_TaskBoards_Tasks_TaskId",
-                        column: x => x.TaskId,
-                        principalTable: "Tasks",
-                        principalColumn: "TaskId",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_TaskBoards_Tasks_TasksTaskId",
-                        column: x => x.TasksTaskId,
-                        principalTable: "Tasks",
-                        principalColumn: "TaskId");
-                });
-
-            migrationBuilder.CreateTable(
                 name: "AddTrainingLists",
                 columns: table => new
                 {
@@ -501,12 +362,6 @@ namespace DDDHrmsWebApi.Infrastructure.Migrations
                         principalTable: "AddTrainingType",
                         principalColumn: "TrainingTypeId",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_AddTrainingLists_Employee_EmployeeId",
-                        column: x => x.EmployeeId,
-                        principalTable: "Employee",
-                        principalColumn: "EmployeeId",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -531,12 +386,6 @@ namespace DDDHrmsWebApi.Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Attendances", x => x.AttendanceId);
-                    table.ForeignKey(
-                        name: "FK_Attendances_Employee_EmployeeId",
-                        column: x => x.EmployeeId,
-                        principalTable: "Employee",
-                        principalColumn: "EmployeeId",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -554,12 +403,6 @@ namespace DDDHrmsWebApi.Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_EmpBankDetailss", x => x.EmpBankDetailsId);
-                    table.ForeignKey(
-                        name: "FK_EmpBankDetailss_Employee_EmployeeId",
-                        column: x => x.EmployeeId,
-                        principalTable: "Employee",
-                        principalColumn: "EmployeeId",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -577,12 +420,6 @@ namespace DDDHrmsWebApi.Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_EmpEducationInfo", x => x.EducationInfoId);
-                    table.ForeignKey(
-                        name: "FK_EmpEducationInfo_Employee_EmployeeId",
-                        column: x => x.EmployeeId,
-                        principalTable: "Employee",
-                        principalColumn: "EmployeeId",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -600,12 +437,6 @@ namespace DDDHrmsWebApi.Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_EmpExperience", x => x.ExperienceId);
-                    table.ForeignKey(
-                        name: "FK_EmpExperience_Employee_EmployeeId",
-                        column: x => x.EmployeeId,
-                        principalTable: "Employee",
-                        principalColumn: "EmployeeId",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -623,12 +454,57 @@ namespace DDDHrmsWebApi.Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_EmpFamilyInfo", x => x.FInfoId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Employee",
+                columns: table => new
+                {
+                    EmployeeId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    JoiningDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    BirthDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DepartmentId = table.Column<int>(type: "int", nullable: false),
+                    RoleId = table.Column<int>(type: "int", nullable: false),
+                    DesignationId = table.Column<int>(type: "int", nullable: false),
+                    ContactNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Gender = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    About = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ProjectId = table.Column<int>(type: "int", nullable: true),
+                    AddRoleRoleId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Employee", x => x.EmployeeId);
                     table.ForeignKey(
-                        name: "FK_EmpFamilyInfo_Employee_EmployeeId",
-                        column: x => x.EmployeeId,
-                        principalTable: "Employee",
-                        principalColumn: "EmployeeId",
-                        onDelete: ReferentialAction.Cascade);
+                        name: "FK_Employee_AddDepartments_DepartmentId",
+                        column: x => x.DepartmentId,
+                        principalTable: "AddDepartments",
+                        principalColumn: "DepartmentId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Employee_AddDesignation_DesignationId",
+                        column: x => x.DesignationId,
+                        principalTable: "AddDesignation",
+                        principalColumn: "DesignationId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Employee_AddRole_AddRoleRoleId",
+                        column: x => x.AddRoleRoleId,
+                        principalTable: "AddRole",
+                        principalColumn: "RoleId");
+                    table.ForeignKey(
+                        name: "FK_Employee_AddRole_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "AddRole",
+                        principalColumn: "RoleId",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -752,6 +628,36 @@ namespace DDDHrmsWebApi.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Projects",
+                columns: table => new
+                {
+                    ProjectId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ProjectName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    ClientName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false),
+                    StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Priority = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    ProjectValue = table.Column<double>(type: "float", nullable: false),
+                    PriceType = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    FilePath = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    LogoPath = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    Status = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    ManagerId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Projects", x => x.ProjectId);
+                    table.ForeignKey(
+                        name: "FK_Projects_Employee_ManagerId",
+                        column: x => x.ManagerId,
+                        principalTable: "Employee",
+                        principalColumn: "EmployeeId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Promotion",
                 columns: table => new
                 {
@@ -827,31 +733,6 @@ namespace DDDHrmsWebApi.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "TaskMembers",
-                columns: table => new
-                {
-                    AssignedId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    TaskId = table.Column<int>(type: "int", nullable: true),
-                    EmployeeId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_TaskMembers", x => x.AssignedId);
-                    table.ForeignKey(
-                        name: "FK_TaskMembers_Employee_EmployeeId",
-                        column: x => x.EmployeeId,
-                        principalTable: "Employee",
-                        principalColumn: "EmployeeId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_TaskMembers_Tasks_TaskId",
-                        column: x => x.TaskId,
-                        principalTable: "Tasks",
-                        principalColumn: "TaskId");
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Tickets",
                 columns: table => new
                 {
@@ -881,39 +762,6 @@ namespace DDDHrmsWebApi.Infrastructure.Migrations
                         principalTable: "Employee",
                         principalColumn: "EmployeeId",
                         onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Timesheet",
-                columns: table => new
-                {
-                    TimesheetId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    EmployeeId = table.Column<int>(type: "int", nullable: false),
-                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    WorkHours = table.Column<int>(type: "int", nullable: false),
-                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ApprovedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ApprovedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    ProjectId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Timesheet", x => x.TimesheetId);
-                    table.ForeignKey(
-                        name: "FK_Timesheet_Employee_EmployeeId",
-                        column: x => x.EmployeeId,
-                        principalTable: "Employee",
-                        principalColumn: "EmployeeId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Timesheet_Projects_ProjectId",
-                        column: x => x.ProjectId,
-                        principalTable: "Projects",
-                        principalColumn: "ProjectId",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -973,6 +821,64 @@ namespace DDDHrmsWebApi.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Tasks",
+                columns: table => new
+                {
+                    TaskId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ProjectId = table.Column<int>(type: "int", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false),
+                    Status = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Priority = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    FilePath = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    Deadline = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Tasks", x => x.TaskId);
+                    table.ForeignKey(
+                        name: "FK_Tasks_Projects_ProjectId",
+                        column: x => x.ProjectId,
+                        principalTable: "Projects",
+                        principalColumn: "ProjectId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Timesheet",
+                columns: table => new
+                {
+                    TimesheetId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    EmployeeId = table.Column<int>(type: "int", nullable: false),
+                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    WorkHours = table.Column<int>(type: "int", nullable: false),
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ApprovedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ApprovedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    ProjectId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Timesheet", x => x.TimesheetId);
+                    table.ForeignKey(
+                        name: "FK_Timesheet_Employee_EmployeeId",
+                        column: x => x.EmployeeId,
+                        principalTable: "Employee",
+                        principalColumn: "EmployeeId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Timesheet_Projects_ProjectId",
+                        column: x => x.ProjectId,
+                        principalTable: "Projects",
+                        principalColumn: "ProjectId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Termination",
                 columns: table => new
                 {
@@ -1000,6 +906,65 @@ namespace DDDHrmsWebApi.Infrastructure.Migrations
                         principalTable: "Resignation",
                         principalColumn: "ResignationId",
                         onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TaskBoards",
+                columns: table => new
+                {
+                    TaskBoardId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ProjectId = table.Column<int>(type: "int", nullable: false),
+                    TaskId = table.Column<int>(type: "int", nullable: false),
+                    Percentage = table.Column<int>(type: "int", nullable: false),
+                    DueDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    TasksTaskId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TaskBoards", x => x.TaskBoardId);
+                    table.ForeignKey(
+                        name: "FK_TaskBoards_Projects_ProjectId",
+                        column: x => x.ProjectId,
+                        principalTable: "Projects",
+                        principalColumn: "ProjectId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_TaskBoards_Tasks_TaskId",
+                        column: x => x.TaskId,
+                        principalTable: "Tasks",
+                        principalColumn: "TaskId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_TaskBoards_Tasks_TasksTaskId",
+                        column: x => x.TasksTaskId,
+                        principalTable: "Tasks",
+                        principalColumn: "TaskId");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TaskMembers",
+                columns: table => new
+                {
+                    AssignedId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TaskId = table.Column<int>(type: "int", nullable: true),
+                    EmployeeId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TaskMembers", x => x.AssignedId);
+                    table.ForeignKey(
+                        name: "FK_TaskMembers_Employee_EmployeeId",
+                        column: x => x.EmployeeId,
+                        principalTable: "Employee",
+                        principalColumn: "EmployeeId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_TaskMembers_Tasks_TaskId",
+                        column: x => x.TaskId,
+                        principalTable: "Tasks",
+                        principalColumn: "TaskId");
                 });
 
             migrationBuilder.CreateIndex(
@@ -1118,9 +1083,9 @@ namespace DDDHrmsWebApi.Infrastructure.Migrations
                 column: "DesignationId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Employee_ProjectsProjectId",
+                name: "IX_Employee_ProjectId",
                 table: "Employee",
-                column: "ProjectsProjectId");
+                column: "ProjectId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Employee_RoleId",
@@ -1186,6 +1151,11 @@ namespace DDDHrmsWebApi.Infrastructure.Migrations
                 name: "IX_Payslips_EmployeeId",
                 table: "Payslips",
                 column: "EmployeeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Projects_ManagerId",
+                table: "Projects",
+                column: "ManagerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Promotion_DepartmentId",
@@ -1276,11 +1246,87 @@ namespace DDDHrmsWebApi.Infrastructure.Migrations
                 name: "IX_Timesheet_ProjectId",
                 table: "Timesheet",
                 column: "ProjectId");
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_AddTrainingLists_Employee_EmployeeId",
+                table: "AddTrainingLists",
+                column: "EmployeeId",
+                principalTable: "Employee",
+                principalColumn: "EmployeeId",
+                onDelete: ReferentialAction.Cascade);
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_Attendances_Employee_EmployeeId",
+                table: "Attendances",
+                column: "EmployeeId",
+                principalTable: "Employee",
+                principalColumn: "EmployeeId",
+                onDelete: ReferentialAction.Cascade);
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_EmpBankDetailss_Employee_EmployeeId",
+                table: "EmpBankDetailss",
+                column: "EmployeeId",
+                principalTable: "Employee",
+                principalColumn: "EmployeeId",
+                onDelete: ReferentialAction.Cascade);
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_EmpEducationInfo_Employee_EmployeeId",
+                table: "EmpEducationInfo",
+                column: "EmployeeId",
+                principalTable: "Employee",
+                principalColumn: "EmployeeId",
+                onDelete: ReferentialAction.Cascade);
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_EmpExperience_Employee_EmployeeId",
+                table: "EmpExperience",
+                column: "EmployeeId",
+                principalTable: "Employee",
+                principalColumn: "EmployeeId",
+                onDelete: ReferentialAction.Cascade);
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_EmpFamilyInfo_Employee_EmployeeId",
+                table: "EmpFamilyInfo",
+                column: "EmployeeId",
+                principalTable: "Employee",
+                principalColumn: "EmployeeId",
+                onDelete: ReferentialAction.Cascade);
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_Employee_Projects_ProjectId",
+                table: "Employee",
+                column: "ProjectId",
+                principalTable: "Projects",
+                principalColumn: "ProjectId",
+                onDelete: ReferentialAction.Restrict);
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropForeignKey(
+                name: "FK_AddDesignation_AddDepartments_DepartmentId",
+                table: "AddDesignation");
+
+            migrationBuilder.DropForeignKey(
+                name: "FK_Employee_AddDepartments_DepartmentId",
+                table: "Employee");
+
+            migrationBuilder.DropForeignKey(
+                name: "FK_Employee_AddRole_AddRoleRoleId",
+                table: "Employee");
+
+            migrationBuilder.DropForeignKey(
+                name: "FK_Employee_AddRole_RoleId",
+                table: "Employee");
+
+            migrationBuilder.DropForeignKey(
+                name: "FK_Projects_Employee_ManagerId",
+                table: "Projects");
+
             migrationBuilder.DropTable(
                 name: "AddAdminDocName");
 
@@ -1381,19 +1427,19 @@ namespace DDDHrmsWebApi.Infrastructure.Migrations
                 name: "MasterLeaveType");
 
             migrationBuilder.DropTable(
+                name: "AddDepartments");
+
+            migrationBuilder.DropTable(
+                name: "AddRole");
+
+            migrationBuilder.DropTable(
                 name: "Employee");
 
             migrationBuilder.DropTable(
                 name: "AddDesignation");
 
             migrationBuilder.DropTable(
-                name: "AddRole");
-
-            migrationBuilder.DropTable(
                 name: "Projects");
-
-            migrationBuilder.DropTable(
-                name: "AddDepartments");
         }
     }
 }

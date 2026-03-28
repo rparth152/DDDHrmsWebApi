@@ -6,7 +6,6 @@ namespace DDDHrmsWebApi.Domain.Model
     public class TaskBoards
     {
 
-
         [Key]
         public int TaskBoardId { get; set; }
 
@@ -16,7 +15,7 @@ namespace DDDHrmsWebApi.Domain.Model
         //taskboard have one project (taskboard-->project== many to one )
         public Projects Projects { get; set; }
 
-        [ForeignKey("Task")]
+        [ForeignKey("Tasks")]
         public int TaskId { get; set; }
 
         //taskboard have one task  (taskboard-->task== many to one )
@@ -28,8 +27,5 @@ namespace DDDHrmsWebApi.Domain.Model
         [Required]
         public DateTime DueDate { get; set; }
 
-
-
     }
-
 }

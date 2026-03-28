@@ -729,7 +729,7 @@ namespace DDDHrmsWebApi.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ProjectsProjectId")
+                    b.Property<int?>("ProjectId")
                         .HasColumnType("int");
 
                     b.Property<int>("RoleId")
@@ -747,7 +747,7 @@ namespace DDDHrmsWebApi.Infrastructure.Migrations
 
                     b.HasIndex("DesignationId");
 
-                    b.HasIndex("ProjectsProjectId");
+                    b.HasIndex("ProjectId");
 
                     b.HasIndex("RoleId");
 
@@ -1009,9 +1009,8 @@ namespace DDDHrmsWebApi.Infrastructure.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<string>("ManagerName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("ManagerId")
+                        .HasColumnType("int");
 
                     b.Property<string>("PriceType")
                         .IsRequired()
@@ -1040,6 +1039,8 @@ namespace DDDHrmsWebApi.Infrastructure.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.HasKey("ProjectId");
+
+                    b.HasIndex("ManagerId");
 
                     b.ToTable("Projects");
                 });
@@ -1582,9 +1583,10 @@ namespace DDDHrmsWebApi.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("DDDHrmsWebApi.Domain.Model.Projects", null)
+                    b.HasOne("DDDHrmsWebApi.Domain.Model.Projects", "Projects")
                         .WithMany("Employee")
-                        .HasForeignKey("ProjectsProjectId");
+                        .HasForeignKey("ProjectId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("DDDHrmsWebApi.Domain.Model.AddRole", "AddRole")
                         .WithMany()
@@ -1597,6 +1599,8 @@ namespace DDDHrmsWebApi.Infrastructure.Migrations
                     b.Navigation("AddDesignation");
 
                     b.Navigation("AddRole");
+
+                    b.Navigation("Projects");
                 });
 
             modelBuilder.Entity("DDDHrmsWebApi.Domain.Model.EmployeeDeductions", b =>
@@ -1707,6 +1711,17 @@ namespace DDDHrmsWebApi.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Employee");
+                });
+
+            modelBuilder.Entity("DDDHrmsWebApi.Domain.Model.Projects", b =>
+                {
+                    b.HasOne("DDDHrmsWebApi.Domain.Model.Employee", "Manager")
+                        .WithMany()
+                        .HasForeignKey("ManagerId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Manager");
                 });
 
             modelBuilder.Entity("DDDHrmsWebApi.Domain.Model.Promotion", b =>
@@ -1861,7 +1876,7 @@ namespace DDDHrmsWebApi.Infrastructure.Migrations
                         .IsRequired();
 
                     b.HasOne("DDDHrmsWebApi.Domain.Model.Projects", "Projects")
-                        .WithMany()
+                        .WithMany("Timesheets")
                         .HasForeignKey("ProjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1912,6 +1927,8 @@ namespace DDDHrmsWebApi.Infrastructure.Migrations
                     b.Navigation("Employee");
 
                     b.Navigation("Tasks");
+
+                    b.Navigation("Timesheets");
                 });
 
             modelBuilder.Entity("DDDHrmsWebApi.Domain.Model.Tasks", b =>
