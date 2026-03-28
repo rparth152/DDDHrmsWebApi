@@ -9,7 +9,7 @@ namespace DDDHrmsWebApi.Domain.Model
 
         public string DepartmentName { get; set; }
 
-        public string Status { get; set; }
+         public string Status { get; set; }
 
         public string CreatedBy { get; set; }
 
