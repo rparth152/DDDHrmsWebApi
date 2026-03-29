@@ -44,7 +44,7 @@ namespace DDDHrmsWebApi.Infrastructure.Services
         }
         List<FetchAttendance> IEstatus.FAttendance()
         {
-            var data =  mapper.Map<List<FetchAttendance>>(db.Attendances.ToList());
+            var data = mapper.Map<List<FetchAttendance>>(db.Attendances.ToList());
             return data;
         }
 
@@ -73,6 +73,14 @@ namespace DDDHrmsWebApi.Infrastructure.Services
         {
             var data = mapper.Map<List<FetchLeaves>>(db.LeaveRequest.ToList());
             return data;
+        }
+        public Fcount Lcount() {
+            return new Fcount
+            {
+                Leaveactive = db.LeaveRequest.Where(x => x.Status == "Active").Count(),
+                Leave = db.LeaveRequest.Count(),
+                Leaveinactive = db.LeaveRequest.Where(x => x.Status == "Inactive").Count(),
+            };
         }
 
         public byte[] ExportEmployeesToCSV()

@@ -50,6 +50,12 @@ namespace DDDHrmsWebApi.Api.Controllers
             var data = service.ExportEmployeesToPDF();
             return File(data, "application/pdf", "EmployeeReport.pdf");
         }
+
+        [HttpGet("LeaveGraph")]
+        public IActionResult Leave() {
+            var data = service.Lcount();
+            return Ok(ApiResponse<Fcount>.SuccessResponse(data));
+        }
         //[HttpGet("Empcount")]
         //public IActionResult EmployeeCount() {
         //    var data = service.EmployeeCount();
