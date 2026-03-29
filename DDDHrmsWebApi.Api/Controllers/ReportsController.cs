@@ -31,7 +31,12 @@ namespace DDDHrmsWebApi.Api.Controllers
         [HttpGet("fattendance")]
         public IActionResult FetchAttendance() {
             var data = service.FAttendance();
-            return Ok(ApiResponse<List<FetchAttendance>>.SuccessResponse(data));
+            return Ok(ApiResponse<List<FetchAttendance>>.SuccessResponse(data)); 
+            //if (data != null)
+            //{
+            //    return Ok(ApiResponse<List<FetchAttendance>>.SuccessResponse(data));
+            //}
+            //else { return Ok(ApiResponse<List<FetchAttendance>>.ErrorResponse("Error Fetching the data")); }
         }
         [HttpGet("fleaves")]
         public IActionResult FetchLeaves() {
