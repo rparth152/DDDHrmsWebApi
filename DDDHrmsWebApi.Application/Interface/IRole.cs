@@ -11,8 +11,8 @@ namespace DDDHrmsWebApi.Application.Interface
     {
         void AddRole(RoleDTO dto);
 
-        List<RoleDTO> FetchRole();
-
+        PagedResponse<RoleDTO> FetchRole(PagedRequest request);
+        //PagedResponse<DepartmentDTO> FetchDepartment(PagedRequest request);
         RoleDTO FindRoleById(int id);
         bool UpdateRole(RoleUpdateDTO dto);
 

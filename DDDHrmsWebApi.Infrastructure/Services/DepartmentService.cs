@@ -117,7 +117,7 @@ namespace DDDHrmsWebApi.Infrastructure.Services
             }
 
             data.Status = "Inactive";
-            db.AddDepartments.Remove(data);
+            //db.AddDepartments.Remove(data);
             db.SaveChanges();
 
             return true;

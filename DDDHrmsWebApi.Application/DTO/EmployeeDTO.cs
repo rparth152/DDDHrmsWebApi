@@ -1,4 +1,5 @@
 ﻿using DDDHrmsWebApi.Domain.Model;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -35,6 +36,13 @@ namespace DDDHrmsWebApi.Application.DTO
         public string Status { get; set; }
         public string About { get; set; }
 
-      
+
+        // for upload
+        public IFormFile? ImageFile { get; set; }
+
+        // for fetch response
+        public string? ImagePath { get; set; }
+
+
     }
 }

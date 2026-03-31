@@ -9,12 +9,13 @@ namespace DDDHrmsWebApi.Application.Interface
 {
     public interface IEmployee
     {
-        void AddEmployee(EmployeeDTO dto);
+         Task AddEmployee(EmployeeDTO dto);
 
-        List<EmpDeptDesigRole> FetchEmployee();
+        PagedResponse<EmpDeptDesigRole> FetchEmployee(PagedRequest request);
 
+       
         EmployeeDTO FindEmployeeById(int id);
-        void UpdateEmployee(EmployeeDTO dto);
+        Task UpdateEmployee(EmployeeDTO dto);
 
         bool DeleteEmployee(int id);
     }

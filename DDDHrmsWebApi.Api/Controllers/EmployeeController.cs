@@ -43,19 +43,28 @@ namespace DDDHrmsWebApi.Api.Controllers
 
         [HttpPost]
         [Route("AddEmployee")]
-        public IActionResult AddEmployee(EmployeeDTO dto)
+        public async Task<IActionResult> AddEmployee([FromForm] EmployeeDTO dto)
         {
-            service.AddEmployee(dto);
+            await service.AddEmployee(dto);
             return Ok(new { message = "Employee Added  successfully", data = dto });
         }
 
+        //[HttpPost]
+        //public async Task<IActionResult> AddEmployee([FromForm] EmployeeDTO dto)
+        //{
+        //    await _service.AddEmployee(dto);
+        //    return Ok("Employee Added Successfully");
+        //}
+
         [HttpGet]
         [Route("FetchEmployee")]
-        public IActionResult FetchEmployee()
+        public IActionResult FetchEmployee([FromQuery] PagedRequest request)
         {
-            var res = service.FetchEmployee();
+            var res = service.FetchEmployee(request);
             return Ok(res);
         }
+
+      
 
         [HttpGet]
         [Route("GetEmployeeByID/{id}")]
@@ -68,9 +77,9 @@ namespace DDDHrmsWebApi.Api.Controllers
 
         [HttpPut]
         [Route("UpdateDesignation")]
-        public IActionResult UpdateEmployee(EmployeeDTO dto)
+        public async Task< IActionResult> UpdateEmployee(EmployeeDTO dto)
         {
-            service.UpdateEmployee(dto);
+            await service.UpdateEmployee(dto);
             return Ok(new { message = "Designation Updated", data = dto });
 
         }

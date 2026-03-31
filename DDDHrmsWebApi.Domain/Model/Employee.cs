@@ -32,8 +32,10 @@ namespace DDDHrmsWebApi.Domain.Model
         public string? Status { get; set; }
         public string? About { get; set; }
 
+        public string? ImagePath { get; set; }
+    
 
 
-
+    
     }
 }

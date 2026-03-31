@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,5 +24,13 @@ namespace DDDHrmsWebApi.Application.DTO
         public string DepartmentName { get; set; }
         public string RoleName { get; set; }
         public string DesignationName { get; set; }
+
+
+
+        // for upload
+        public IFormFile? ImageFile { get; set; }
+
+        // for fetch response
+        public string? ImagePath { get; set; }
     }
 }

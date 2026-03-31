@@ -7,7 +7,7 @@ namespace DDDHrmsWebApi.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+
     public class DepartmentController : ControllerBase
     {
         private readonly IDepartments service;
@@ -18,7 +18,7 @@ namespace DDDHrmsWebApi.Api.Controllers
             service = departments;
         }
 
- 
+       
         [HttpPost]
         [Route("AddDepartment")]
         public IActionResult AddDepartment(DepartmentDTO dto)
@@ -29,7 +29,7 @@ namespace DDDHrmsWebApi.Api.Controllers
                 .SuccessResponse(dto, "Department Added Successfully"));
         }
 
-        [Authorize(Roles = "Admin")]
+        
         [HttpGet]
         [Route("FetchDepartment")]
         public IActionResult FetchDepartment([FromQuery] PagedRequest request)

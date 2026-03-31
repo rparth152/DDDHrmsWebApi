@@ -25,7 +25,7 @@ namespace DDDHrmsWebApi.Application.Mapping
             CreateMap<AddDesignation, DesignationDeptDTO>().ForMember(x => x.DepartmentName,
                 x => x.MapFrom(x => x.AddDepartments != null ? x.AddDepartments.DepartmentName : "No Dept"));
 
-            CreateMap<Employee, EmployeeDTO>().ReverseMap();
+            CreateMap<Employee, EmployeeDTO>().ReverseMap().ForMember(dest => dest.ImagePath, opt => opt.Ignore());
 
             CreateMap<Employee, EmpDeptDesigRole>()
              .ForMember(dept => dept.DepartmentName, o => o.MapFrom(s => s.AddDepartments.DepartmentName))

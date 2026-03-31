@@ -19,6 +19,9 @@ namespace DDDHrmsWebApi.Application.DTO
 
         public int? NextPage { get; set; }
         public int? PreviousPage { get; set; }
+
+        public int TotalActive { get; set; }
+        public int TotalInactive { get; set; }
         public List<T> Data { get; set; }
     }
 }

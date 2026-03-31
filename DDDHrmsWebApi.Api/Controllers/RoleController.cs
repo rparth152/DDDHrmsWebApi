@@ -10,6 +10,7 @@ namespace DDDHrmsWebApi.Api.Controllers
     public class RoleController : ControllerBase
     {
         IRole service;
+        private readonly ILogger<DepartmentController> _logger;
 
         public RoleController(IRole role)
         {
@@ -21,15 +22,17 @@ namespace DDDHrmsWebApi.Api.Controllers
         public IActionResult AddDepartment(RoleDTO dto)
         {
             service.AddRole(dto);
-            return Ok(new { message = "Role Added  successfully", data = dto });
+            //return Ok(new { message = "Role Added  successfully", data = dto });
+
+            return Ok(ApiResponse<RoleDTO>.SuccessResponse(dto, "Role Added Successfully"));
         }
 
         [HttpGet]
         [Route("FetchRole")]
-        public IActionResult FetchRole()
+        public IActionResult FetchRole([FromQuery] PagedRequest request)
         {
-            var res = service.FetchRole();
-            return Ok(res);
+            var res = service.FetchRole(request);
+            return Ok(ApiResponse<PagedResponse<RoleDTO>>.SuccessResponse(res, "Role fetched successfully"));
         }
 
         [HttpGet]
@@ -37,11 +40,21 @@ namespace DDDHrmsWebApi.Api.Controllers
         public IActionResult FindRoleById(int id)
         {
             var data = service.FindRoleById(id);
-            return Ok(data);
+            //return Ok(data);
+
+
+            if (data == null)
+            {
+                //_logger.LogWarning("Department not found for ID: {Id}", id);
+
+                return NotFound(ApiResponse<string>.ErrorResponse("Department not found"));
+            }
+
+            return Ok(ApiResponse<RoleDTO>.SuccessResponse(data, "Department found"));
         }
 
         [HttpPut]
-        [Route("UpdDepartment")]
+        [Route("UpdateRole")]
         public IActionResult UpdateRole(RoleUpdateDTO dto)
         {
             service.UpdateRole(dto);
