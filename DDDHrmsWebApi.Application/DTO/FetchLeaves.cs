@@ -29,6 +29,6 @@ namespace DDDHrmsWebApi.Application.DTO
         public string Status { get; set; }
         public string StatusHistory { get; set; }
 
-        
+            
     }
 }

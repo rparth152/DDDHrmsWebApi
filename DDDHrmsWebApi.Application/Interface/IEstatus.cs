@@ -19,7 +19,12 @@ namespace DDDHrmsWebApi.Application.Interface
         byte[] ExportEmployeesToCSV();
         byte[] ExportEmployeesToPDF();
         public Fcount Lcount();
-        
+        public List<AttendenceGraph> attendencegraph();
         public EstatusDTO Fetchdata();
+
+        public ProjectDTO projectgraph();
+        public List<ProjectTable> Projtable();
+        public TaskDTO Taskgraph();
+        public List<TaskTable> Tasktable();
     }
 }

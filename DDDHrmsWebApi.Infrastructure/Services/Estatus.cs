@@ -77,12 +77,40 @@ namespace DDDHrmsWebApi.Infrastructure.Services
         public Fcount Lcount() {
             return new Fcount
             {
+
                 Leaveactive = db.LeaveRequest.Where(x => x.Status == "Active").Count(),
                 Leave = db.LeaveRequest.Count(),
                 Leaveinactive = db.LeaveRequest.Where(x => x.Status == "Inactive").Count(),
             };
         }
-
+        public List<AttendenceGraph> attendencegraph() { 
+            var Data = db.Attendances.Select(a => new AttendenceGraph
+            {
+                CheckIn = a.CheckIn,
+            }).ToList();
+            return Data;
+        }
+        public ProjectDTO projectgraph() {
+            return new ProjectDTO {
+                ProjActive = db.Projects.Where(x => x.Status == "Active").Count(),
+                ProjInactive = db.Projects.Where(x => x.Status == "Inactive").Count(),
+            };
+        }
+        public List<ProjectTable> Projtable() {
+            var data = mapper.Map<List<ProjectTable>>(db.Projects.ToList());
+            return data;
+        }
+        public TaskDTO Taskgraph() {
+            return new TaskDTO
+            {
+                TaskActive = db.Projects.Where(x => x.Status == "Active").Count(),
+                TaskInactive = db.Projects.Where(x => x.Status == "Inactive").Count(),
+            };
+        }
+        public List<TaskTable> Tasktable() {
+            var data = mapper.Map<List<TaskTable>>(db.Tasks.ToList());
+            return data;
+        }
         public byte[] ExportEmployeesToCSV()
         {
             var employees = mapper

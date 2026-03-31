@@ -61,6 +61,31 @@ namespace DDDHrmsWebApi.Api.Controllers
             var data = service.Lcount();
             return Ok(ApiResponse<Fcount>.SuccessResponse(data));
         }
+        [HttpGet("AttendanceGraph")]
+        public IActionResult Attendance() {
+            var data = service.attendencegraph();
+            return Ok(ApiResponse<List<AttendenceGraph>>.SuccessResponse(data));
+        }
+        [HttpGet("ProjGraph")]
+        public IActionResult ProjGraph() {
+            var data = service.projectgraph();
+            return Ok(ApiResponse<ProjectDTO>.SuccessResponse(data));
+        }
+        [HttpGet("ProjTable")]
+        public IActionResult ProjTable() {
+            var data = service.Projtable();
+            return Ok(ApiResponse<List<ProjectTable>>.SuccessResponse(data));
+        }
+        [HttpGet("TaskGraph")]
+        public IActionResult TaskGraph() {
+            var data = service.Taskgraph();
+            return Ok(ApiResponse<TaskDTO>.SuccessResponse(data));
+        }
+        [HttpGet("TaskTable")]
+        public IActionResult TaskTable() {
+            var data = service.Tasktable();
+            return Ok(ApiResponse<List<TaskTable>>.SuccessResponse(data));
+        } 
         //[HttpGet("Empcount")]
         //public IActionResult EmployeeCount() {
         //    var data = service.EmployeeCount();
