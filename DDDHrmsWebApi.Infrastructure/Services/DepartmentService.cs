@@ -32,12 +32,12 @@ namespace DDDHrmsWebApi.Infrastructure.Services
         }
 
 
-        //public List<DepartmentDTO> FetchDepartment()
-        //{
-        //  var data = db.AddDepartments.ToList();
-        //    var res = mapper.Map<List<DepartmentDTO>>(data);
-        //    return res;
-        //}
+        public List<DepartmentDTO> GetAllDepartments()
+        {
+            var data = db.AddDepartments.Where(x => x.Status == "Active").ToList();
+            var res = mapper.Map<List<DepartmentDTO>>(data);
+            return res;
+        }
 
         public PagedResponse<DepartmentDTO> FetchDepartment(PagedRequest request)
         {

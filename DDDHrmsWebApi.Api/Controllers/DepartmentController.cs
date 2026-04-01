@@ -91,5 +91,21 @@ namespace DDDHrmsWebApi.Api.Controllers
             return Ok(ApiResponse<string>
                 .SuccessResponse(null, "Department Deleted Successfully"));
         }
+
+        [HttpGet("GetAllDepartments")]
+        public IActionResult GetAllDepartments()
+        {
+            //var data = db.AddDepartments
+            //    .Where(x => x.Status == "Active")
+            //    .Select(x => new {
+            //        x.DepartmentId,
+            //        x.DepartmentName
+            //    })
+            //    .ToList();
+
+            var res =  service.GetAllDepartments();
+
+            return Ok(new{res});
+        }
     }
 }

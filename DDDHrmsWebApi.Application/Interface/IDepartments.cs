@@ -13,7 +13,7 @@ namespace DDDHrmsWebApi.Application.Interface
     {
         void AddDepartment(DepartmentDTO dto);
 
-        //List<DepartmentDTO> FetchDepartment();
+        List<DepartmentDTO> GetAllDepartments();
         PagedResponse<DepartmentDTO> FetchDepartment(PagedRequest request);
         DepartmentDTO FindDeptById(int id);
         void UpdateDeptment(DepartmentDTO dto);
