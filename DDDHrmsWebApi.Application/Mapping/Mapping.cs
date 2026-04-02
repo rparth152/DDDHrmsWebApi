@@ -26,6 +26,8 @@ namespace DDDHrmsWebApi.Application.Mapping
                 opt => opt.MapFrom(src => src.AddDepartments.DepartmentName))
             .ForMember(dest => dest.JoiningDate,
                 opt => opt.MapFrom(src => src.JoiningDate.ToString("yyyy-MM-dd")));
+            CreateMap<Projects, ProjectTable>();
+            CreateMap<Tasks, TaskTable>();
         }
     }
 }
